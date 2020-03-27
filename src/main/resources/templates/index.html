@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>blog</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+
+<section layout:fragment="blogPosts">
+
+    <!--formularz-->
+    <form action="/newpost" method="post">
+        Tytuł: <input type="text" name="title" size="150"/>
+        Treść: <input type="content" name="content" size="150"/>
+        <input type="submit" value="Dodaj wpis" />
+    </form>
+
+    <!--lista wpisow-->
+    <table class="table-striped">
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>content</th>
+            <th>remove</th>
+        </tr>
+
+        <tr th:each="blogPost, iterStat: ${allPosts}">
+            <td th:text="${allPosts.get(iterStat.index).getId()}"></td>
+            <td th:text="${allPosts.get(iterStat.index).getTitle()}"></td>
+            <td th:text="${allPosts.get(iterStat.index).getContent()}"></td>
+            <td>
+                <form action="/removepost" method="post">
+                    <button name="id" th:value="${allPosts.get(iterStat.index).getId()}">❌</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+</section>
+
+</body>
+</html>
